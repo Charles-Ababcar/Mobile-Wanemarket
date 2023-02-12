@@ -1,0 +1,9 @@
+
+Il appartient au Client de sélectionner sur wanemarket les Produits qu'il désire commander, selon les modalités suivantes :
+Le client choisi un produit qu'il met dans son panier, produit qu'il pourra supprimer ou modifier avant de valider sa commande et d'accepter les présentes conditions générales de vente. Il rentre ensuite ses coordonnées ou se connectera à son espace et choisira le mode de livraison après validation des informations, la commande sera considérée comme définitive et exigera paiement de la part du client selon les modalités prévues.
+
+Les offres de Produits sont valables tant qu'elles sont visibles sur wanemarket, dans la limite des stocks disponibles.
+La vente ne sera considérée comme valide qu’après paiement intégral du prix. Il appartient au Client de vérifier l'exactitude de la commande et de signaler immédiatement toute erreur.
+Toute commande passée sur wanemarket constitue la formation d'un contrat conclu à distance entre le Client et le Vendeur.
+Le Vendeur se réserve le droit d'annuler ou de refuser toute commande d'un Client avec lequel il existerait un litige relatif au paiement d'une commande antérieure.
+Le Client pourra suivre l'évolution de sa commande sur wanemarket.

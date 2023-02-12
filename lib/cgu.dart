@@ -1,0 +1,13 @@
+const cgu_art1_title = "ARTICLE 1 - Champ d'application";
+const cgu_art2_title = "ARTICLE 2 - Prix";
+const cgu_art3_title = "ARTICLE 3 – Commandes";
+const cgu_art3bis_title = "ARTICLE 3 Bis - Espace client - Compte";
+const cgu_art4_title = "ARTICLE 4 - Conditions de paiement";
+const cgu_art5_title = "ARTICLE 5 - Livraisons";
+const cgu_art6_title = "ARTICLE 6 - Transfert de propriété";
+const cgu_art7_title = "ARTICLE 7 - Droit de rétractation";
+const cgu_art8_title = "ARTICLE 8 - Responsabilité du Vendeur - Garanties";
+const cgu_art9_title = "ARTICLE 9 - Données personnelles";
+const cgu_art10_title = "ARTICLE 10 - Propriété intellectuelle";
+const cgu_art11_title = "ARTICLE 11 - Droit applicable - Langue";
+const cgu_art12_title = "ARTICLE 12 - Litiges";

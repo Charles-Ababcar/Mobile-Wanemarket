@@ -34,8 +34,6 @@ class _OwnerMonitoringWidget extends State<OwnerMonitoringWidget>  {
 
   @override
   Widget build(BuildContext context) {
-    
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
         appBar: AppBar(
@@ -47,7 +45,9 @@ class _OwnerMonitoringWidget extends State<OwnerMonitoringWidget>  {
             },
           ),
         ),
+
         body: Column(children: [
+          SizedBox(height: 30,),
         InfoContainer(
           contentColor: yellowSemi,
           borderColor: yellowLight,
@@ -56,6 +56,8 @@ class _OwnerMonitoringWidget extends State<OwnerMonitoringWidget>  {
                     + "Vous devez vérifier leurs société, prendre contact avec eux."
                     + "Ainsi, vous pourrez valider ou refuser la demande d'adhésion.")
         ),
+
+        SizedBox(height: 20,),
 
         StreamBuilder<List<Marketplace>?>(
           stream: marketplaceListBloc.marketplaceListStream,

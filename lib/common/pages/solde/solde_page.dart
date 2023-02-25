@@ -45,22 +45,27 @@ class _SoldePage extends State<SoldePage> {
           },
         ),
       ),
-      body: Stack(
-        children: [
 
-          StreamBuilder<Solde?>(
-            stream: soldeBloc.soldeStream,
-            initialData: null,
-            builder: (context, snapshot) {
-              if(snapshot.data == null) {
-                return LoadingIcon();
-              } else {
-                return getContainer(snapshot.data!, size);
-              }
-            },
-          )
-
-        ],
+      body: StreamBuilder<Solde?>(
+        stream: soldeBloc.soldeStream,
+        initialData: null,
+        builder: (context, snapshot) {
+          if(snapshot.data == null) {
+            return LoadingIcon();
+          } else {
+            return Stack(
+              children: [
+                getContainer(snapshot.data!, size),
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  left: 20,
+                  child: getOrderButton(context),
+                )
+              ],
+            );
+          }
+        },
       ),
     );
   }
@@ -91,13 +96,9 @@ class _SoldePage extends State<SoldePage> {
         Center(child: getInformationContainer(),),
         SizedBox(height: 30,),
         Center(child: getCurrentSolde(solde.currentAmount!)),
+        SizedBox(height: 20,),
 
         getHistoryList(solde.operations),
-
-        Container(
-          width: size.width * 0.9,
-          child: getOrderButton(context),
-        )
 
       ],
     );

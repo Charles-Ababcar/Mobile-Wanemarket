@@ -60,6 +60,7 @@ class _AccountSettingsPage extends State<AccountSettingsPage> {
     super.initState();
     //initPlatformState();
     userDataBloc.loadUserFromRemote();
+    print(applicationState.authUser);
   }
 
   @override
@@ -122,7 +123,7 @@ class _AccountSettingsPage extends State<AccountSettingsPage> {
           /**
            * marketplace card
            */
-          (hasMarketplace(user) /*&& isMarketplaceValidated(user)*/ ? marketplaceCard(user, size): new Container()),
+          isMarketplaceValidated(user) ? marketplaceCard(user, size): new Container(),
 
           SizedBox(height: 10),
 
@@ -143,8 +144,8 @@ class _AccountSettingsPage extends State<AccountSettingsPage> {
            * s'il a déjà un marketplace
            * oon affiche pas le button
            */
-          (hasMarketplace(user)  ? sellerSpaceButton(context): new Container()),
-          (hasMarketplace(user)  ? moneyAcountButton(context): new Container()),
+          (isMarketplaceValidated(user)  ? sellerSpaceButton(context): new Container()),
+          (isMarketplaceValidated(user)  ? moneyAcountButton(context): new Container()),
 
           /**
            * edit profile button
@@ -197,7 +198,7 @@ class _AccountSettingsPage extends State<AccountSettingsPage> {
         // on push l'interface formulaire annonceur
         Navigator.push(context, new MaterialPageRoute(
           builder: (BuildContext context) {
-            return new MarketPlaceFormWidget();
+            return MarketPlaceFormWidget();
           }  
         ))
       },
@@ -381,7 +382,7 @@ class _AccountSettingsPage extends State<AccountSettingsPage> {
   }
 
   bool isMarketplaceValidated(User user) {
-    return user.marketplace != null && user.marketplace?.status == "VALIDATED";
+    return user.marketplace != null && user.marketplace!.status == "VALIDATED";
   }
 
   bool hasRoles () {

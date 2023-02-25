@@ -12,7 +12,6 @@ import 'ordered-item-validation.dart';
 
 class OrderedItemInfos extends StatefulWidget {
 
-
   final OrderedItem? orderedItem;
   const OrderedItemInfos({Key? key, this.orderedItem}) : super(key: key);
 
@@ -69,7 +68,7 @@ class _OrderedItemInfos extends State<OrderedItemInfos> {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.only(top: 10, left: 20, right: 20),
-      height: widget.orderedItem!.instructions == null  ? 100 : 180,
+      height: widget.orderedItem?.instructions == null  ? 100 : 180,
       width: size.width,
       decoration: BoxDecoration(
           color: yellowSemi, borderRadius: new BorderRadius.circular(20)
@@ -79,17 +78,17 @@ class _OrderedItemInfos extends State<OrderedItemInfos> {
 
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.orderedItem!.itemName == null ? "Article inconu" : StringWrapper.cut(widget.orderedItem!.itemName!, 20), style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17)),
+          Text(widget.orderedItem?.itemName == null ? "Article inconu" : StringWrapper.cut(widget.orderedItem!.itemName!, 20), style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17)),
 
-          Text("${widget.orderedItem!.username!} (${widget.orderedItem!.userId})", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15)),
+          Text("${widget.orderedItem!.username} (${widget.orderedItem!.userId})", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15)),
 
-          widget.orderedItem!.instructions == null ? SizedBox(height: 0,) : Container(
+          widget.orderedItem?.instructions == null ? SizedBox(height: 0,) : Container(
             child: Text("Indications:", style: TextStyle(
                 fontWeight: FontWeight.bold
             ),),
           ),
 
-          widget.orderedItem!.instructions == null ? SizedBox(height: 0,) : Container(
+          widget.orderedItem?.instructions == null ? SizedBox(height: 0,) : Container(
             child: Text(widget.orderedItem!.instructions!, style: TextStyle(
                 fontWeight: FontWeight.w300
             ),),

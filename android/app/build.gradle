@@ -53,7 +53,7 @@ android {
         applicationId "com.wanemarket.mobile"
         minSdkVersion 19//31
         targetSdkVersion //31//flutter.targetSdkVersion
-        versionCode 26//flutterVersionCode.toInteger()
+        versionCode 27//flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 

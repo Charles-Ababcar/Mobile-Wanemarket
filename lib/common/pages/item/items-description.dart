@@ -17,6 +17,9 @@ import 'package:mobile_frontend/common/material/big-button.dart';
 import 'package:mobile_frontend/common/material/item-card/label-item.dart';
 import 'package:mobile_frontend/common/material/loading_icon.dart';
 import 'package:mobile_frontend/constraints.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../services/purchase_order_service.dart';
 
 /**
  * Widget which show complete description of an
@@ -73,7 +76,10 @@ class _ItemDescription extends State<ItemDescription> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: yellowStrong,),
+          icon: Icon(
+            Icons.arrow_back,
+            color: yellowStrong,
+          ),
           onPressed: () async {
             Navigator.of(context).pop();
           },
@@ -95,7 +101,6 @@ class _ItemDescription extends State<ItemDescription> {
       ),
     );
 
-
     // );
   }
 
@@ -105,7 +110,9 @@ class _ItemDescription extends State<ItemDescription> {
         /**
          * Item's photo
          */
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         photoContainer(size, item),
 
         /**
@@ -115,8 +122,7 @@ class _ItemDescription extends State<ItemDescription> {
           padding: EdgeInsets.only(right: 10, left: 10),
           child: descriptionContainer3(size, item),
         )
-      ]
-      ),
+      ]),
     );
   }
 
@@ -191,7 +197,6 @@ class _ItemDescription extends State<ItemDescription> {
                     borderRadius:
                         new BorderRadius.all(const Radius.circular(12.0))),
               ),
-
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SizedBox(width: 10, height: 5),
                 applicationState.authToken == null
@@ -213,8 +218,6 @@ class _ItemDescription extends State<ItemDescription> {
 
                 redirectToAuthButton()
               ]),
-
-
             ]),
           )),
     );
@@ -222,7 +225,6 @@ class _ItemDescription extends State<ItemDescription> {
 
   Widget descriptionContainer3(Size size, Item item) {
     return Column(children: [
-
       /**
        * title item
        */
@@ -235,8 +237,7 @@ class _ItemDescription extends State<ItemDescription> {
         //     fontWeight: FontWeight.bold
         // )),
         child: Text("${item.title}",
-            style:
-            TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       ),
 
       /**
@@ -255,8 +256,7 @@ class _ItemDescription extends State<ItemDescription> {
         ),
         decoration: BoxDecoration(
             color: yellowStrong,
-            borderRadius:
-            new BorderRadius.all(const Radius.circular(12.0))),
+            borderRadius: new BorderRadius.all(const Radius.circular(12.0))),
       ),
 
       SizedBox(width: 10, height: 5),
@@ -264,16 +264,18 @@ class _ItemDescription extends State<ItemDescription> {
       applicationState.authToken == null
           ? Container()
           : ((item.inMyWidhList == true
-          ? favoriteButtonRemove()
-          : favoriteButtonAdd())),
+              ? favoriteButtonRemove()
+              : favoriteButtonAdd())),
 
       SizedBox(width: 10, height: 5),
 
       applicationState.authToken == null
           ? Container()
           : ((item.inMyLekket == true
-          ? SizedBox(height: 0,)
-          : lekketAdd(item))),
+              ? SizedBox(
+                  height: 0,
+                )
+              : lekketAdd(item))),
 
       SizedBox(width: 10, height: 5),
       // applicationState.authToken != null
@@ -281,134 +283,202 @@ class _ItemDescription extends State<ItemDescription> {
       // redirectToAuthButton(),
 
       getRowInfo(Icons.person, "Boutique '${item.ownerName}'"),
-      SizedBox(height: 10,),
+      SizedBox(
+        height: 10,
+      ),
 
       getRowInfo(Icons.location_city, "${item.ownerCity}"),
-      SizedBox(height: 10,),
+      SizedBox(
+        height: 10,
+      ),
 
-      getRowInfo(Icons.hourglass_top, "Ajoutée le ${item.creationDate!.toLocal().toString().split(' ')[0]}"),
-      SizedBox(height: 10,),
+      getRowInfo(Icons.hourglass_top,
+          "Ajoutée le ${item.creationDate!.toLocal().toString().split(' ')[0]}"),
+      SizedBox(
+        height: 10,
+      ),
 
-      getRowInfo(Icons.category, "${StringWrapper.cut(item.category!.title!, 25)}"),
-      SizedBox(height: 10,),
+      getRowInfo(
+          Icons.category, "${StringWrapper.cut(item.category!.title!, 25)}"),
+      SizedBox(
+        height: 10,
+      ),
 
-      getRowInfo(Icons.burst_mode, "${item.photos.length} photo(s) disponible(s)."),
-      SizedBox(height: 10,),
+      getRowInfo(
+          Icons.burst_mode, "${item.photos.length} photo(s) disponible(s)."),
+      SizedBox(
+        height: 10,
+      ),
 
-      item.clothesSizedAvailable.length == 0 ? SizedBox(height: 0,) : getRowInfo(Icons.checkroom, "${item.clothesSizedAvailable.join(", ")}."),
-      SizedBox(height: 10,),
+      item.clothesSizedAvailable.length == 0
+          ? SizedBox(
+              height: 0,
+            )
+          : getRowInfo(
+              Icons.checkroom, "${item.clothesSizedAvailable.join(", ")}."),
+      SizedBox(
+        height: 10,
+      ),
 
-      item.shoesSizeAvailable.length == 0 ? SizedBox(height: 0,) : getRowInfo(Icons.square_foot, "${item.shoesSizeAvailable.join(", ")}."),
-      SizedBox(height: 10,),
+      item.shoesSizeAvailable.length == 0
+          ? SizedBox(
+              height: 0,
+            )
+          : getRowInfo(
+              Icons.square_foot, "${item.shoesSizeAvailable.join(", ")}."),
+      SizedBox(
+        height: 10,
+      ),
 
-      item.colorsAvailable.length == 0 ? SizedBox(height: 0,) : getRowInfo(Icons.color_lens, "${item.colorsAvailable.join(", ")}."),
-      SizedBox(height: 10,),
+      item.colorsAvailable.length == 0
+          ? SizedBox(
+              height: 0,
+            )
+          : getRowInfo(Icons.color_lens, "${item.colorsAvailable.join(", ")}."),
+      SizedBox(
+        height: 10,
+      ),
 
       getDescription("${item.description}")
-
     ]);
   }
 
   Widget descriptionContainer2(Size size, Item item) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(10),
-        child: CustomScrollable(
-          child: Column(children: [
-
-            /**
+          padding: EdgeInsets.all(10),
+          child: CustomScrollable(
+            child: Column(children: [
+              /**
              * title item
              */
-            Container(
-              height: 50,
-              width: size.width,
-              margin: EdgeInsets.only(bottom: 10),
-              // child: Text("${item.title}", style: TextStyle (
-              //     fontSize: 18,
-              //     fontWeight: FontWeight.bold
-              // )),
-              child: Text("${item.title}",
-                  style:
-                  TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ),
+              Container(
+                height: 50,
+                width: size.width,
+                margin: EdgeInsets.only(bottom: 10),
+                // child: Text("${item.title}", style: TextStyle (
+                //     fontSize: 18,
+                //     fontWeight: FontWeight.bold
+                // )),
+                child: Text("${item.title}",
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
 
-            /**
+              /**
              * price
              */
-            Container(
-              margin: EdgeInsets.only(bottom: 2),
-              height: 50,
-              width: size.width,
-              child: Center(
-                child: Text("${PriceFormat.formatePrice(item.price!)}",
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600)),
+              Container(
+                margin: EdgeInsets.only(bottom: 2),
+                height: 50,
+                width: size.width,
+                child: Center(
+                  child: Text("${PriceFormat.formatePrice(item.price!)}",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600)),
+                ),
+                decoration: BoxDecoration(
+                    color: yellowStrong,
+                    borderRadius:
+                        new BorderRadius.all(const Radius.circular(12.0))),
               ),
-              decoration: BoxDecoration(
-                  color: yellowStrong,
-                  borderRadius:
-                  new BorderRadius.all(const Radius.circular(12.0))),
-            ),
 
-            SizedBox(width: 10, height: 5),
+              SizedBox(width: 10, height: 5),
 
-            applicationState.authToken == null
-                ? Container()
-                : ((item.inMyWidhList == true
-                ? favoriteButtonRemove()
-                : favoriteButtonAdd())),
+              applicationState.authToken == null
+                  ? Container()
+                  : ((item.inMyWidhList == true
+                      ? favoriteButtonRemove()
+                      : favoriteButtonAdd())),
 
-            SizedBox(width: 10, height: 5),
+              SizedBox(width: 10, height: 5),
 
-            applicationState.authToken == null
-                ? Container()
-                : ((item.inMyLekket == true
-                ? SizedBox(height: 0,)
-                : lekketAdd(item))),
+              applicationState.authToken == null
+                  ? Container()
+                  : ((item.inMyLekket == true
+                      ? SizedBox(
+                          height: 0,
+                        )
+                      : lekketAdd(item))),
 
-            SizedBox(width: 10, height: 5),
-            // applicationState.authToken != null
+              SizedBox(width: 10, height: 5),
+              // applicationState.authToken != null
 
-            // redirectToAuthButton(),
+              // redirectToAuthButton(),
 
-            getRowInfo(Icons.person, "Boutique '${item.ownerName}'"),
-            SizedBox(height: 10,),
+              getRowInfo(Icons.person, "Boutique '${item.ownerName}'"),
+              SizedBox(
+                height: 10,
+              ),
 
-            getRowInfo(Icons.location_city, "${item.ownerCity}"),
-            SizedBox(height: 10,),
+              getRowInfo(Icons.location_city, "${item.ownerCity}"),
+              SizedBox(
+                height: 10,
+              ),
 
-            getRowInfo(Icons.hourglass_top, "Ajoutée le ${item.creationDate!.toLocal().toString().split(' ')[0]}"),
-            SizedBox(height: 10,),
+              getRowInfo(Icons.hourglass_top,
+                  "Ajoutée le ${item.creationDate!.toLocal().toString().split(' ')[0]}"),
+              SizedBox(
+                height: 10,
+              ),
 
-            getRowInfo(Icons.category, "${StringWrapper.cut(item.category!.title!, 25)}"),
-            SizedBox(height: 10,),
+              getRowInfo(Icons.category,
+                  "${StringWrapper.cut(item.category!.title!, 25)}"),
+              SizedBox(
+                height: 10,
+              ),
 
-            getRowInfo(Icons.burst_mode, "${item.photos.length} photo(s) disponible(s)."),
-            SizedBox(height: 10,),
+              getRowInfo(Icons.burst_mode,
+                  "${item.photos.length} photo(s) disponible(s)."),
+              SizedBox(
+                height: 10,
+              ),
 
-            item.clothesSizedAvailable.length == 0 ? SizedBox(height: 0,) : getRowInfo(Icons.checkroom, "${item.clothesSizedAvailable.join(", ")}."),
-            SizedBox(height: 10,),
+              item.clothesSizedAvailable.length == 0
+                  ? SizedBox(
+                      height: 0,
+                    )
+                  : getRowInfo(Icons.checkroom,
+                      "${item.clothesSizedAvailable.join(", ")}."),
+              SizedBox(
+                height: 10,
+              ),
 
-            item.shoesSizeAvailable.length == 0 ? SizedBox(height: 0,) : getRowInfo(Icons.square_foot, "${item.shoesSizeAvailable.join(", ")}."),
-            SizedBox(height: 10,),
+              item.shoesSizeAvailable.length == 0
+                  ? SizedBox(
+                      height: 0,
+                    )
+                  : getRowInfo(Icons.square_foot,
+                      "${item.shoesSizeAvailable.join(", ")}."),
+              SizedBox(
+                height: 10,
+              ),
 
-            item.colorsAvailable.length == 0 ? SizedBox(height: 0,) : getRowInfo(Icons.color_lens, "${item.colorsAvailable.join(", ")}."),
-            SizedBox(height: 10,),
+              item.colorsAvailable.length == 0
+                  ? SizedBox(
+                      height: 0,
+                    )
+                  : getRowInfo(
+                      Icons.color_lens, "${item.colorsAvailable.join(", ")}."),
+              SizedBox(
+                height: 10,
+              ),
 
-            getDescription("${item.description}")
-
-          ]),
-        )),
+              getDescription("${item.description}")
+            ]),
+          )),
     );
   }
 
   getDescription(String text) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 10),
-      child: Text(text, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),)
-    );
+        padding: EdgeInsets.only(bottom: 10),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+        ));
   }
 
   getRowInfo(IconData iconData, String text) {
@@ -417,19 +487,25 @@ class _ItemDescription extends State<ItemDescription> {
         Container(
           height: 50,
           width: 50,
-          child: Center(child: Icon(iconData, size: 30,),),
-
+          child: Center(
+            child: Icon(
+              iconData,
+              size: 30,
+            ),
+          ),
           decoration: BoxDecoration(
               color: yellowSemi,
               // color: yellowSemi,
-              borderRadius : new BorderRadius.all(const Radius.circular(30.0))
-          ),
+              borderRadius: new BorderRadius.all(const Radius.circular(30.0))),
         ),
-
-        SizedBox(width: 20,),
-
+        SizedBox(
+          width: 20,
+        ),
         Container(
-          child: Text(text, style: TextStyle(fontWeight: FontWeight.w300, fontSize: 18),),
+          child: Text(
+            text,
+            style: TextStyle(fontWeight: FontWeight.w300, fontSize: 18),
+          ),
         )
       ],
     );
@@ -457,7 +533,9 @@ class _ItemDescription extends State<ItemDescription> {
           )
         : Container();
   }
+////////////////Shared preferences
 
+//////////////
   lekketAdd(Item item) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -470,18 +548,31 @@ class _ItemDescription extends State<ItemDescription> {
             style: TextStyle(fontSize: 20),
           ),
           callback: () {
-            showDialog(context: context, builder: (BuildContext ctx) {
-              return AlertDialog(
-                title: Text('Ajouter au panier'),
-                content:  ConfirmLekketWidget(
-                    item: item,
-                    callback: (int quantity, String shoeSize, String clotheSize, String color, String? instructions) async {
-                      await lekketActionBloc.addItem(widget.itemId, quantity, shoeSize, clotheSize, color, instructions);
-                      bloc.loadItem(widget.itemId, widget.isAdmin);
-                      afterLekketAction();
-                    }),
-              );
-            });/*
+            showDialog(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return AlertDialog(
+                    title: Text('Ajouter au panier'),
+                    content: ConfirmLekketWidget(
+                        item: item,
+                        callback: (int quantity,
+                            String shoeSize,
+                            String clotheSize,
+                            String color,
+                            String? instructions) async {
+                          await lekketActionBloc.addItem(
+                              widget.itemId,
+                              quantity,
+                              shoeSize,
+                              clotheSize,
+                              color,
+                              instructions);
+
+                          bloc.loadItem(widget.itemId, widget.isAdmin);
+                          afterLekketAction();
+                        }),
+                  );
+                }); /*
             Popup.modal(context, ConfirmLekketWidget(
               item: item,
               callback: (int quantity, String shoeSize, String clotheSize, String color, String? instructions) async {
@@ -507,14 +598,14 @@ class _ItemDescription extends State<ItemDescription> {
       ),
       callback: () {
         showDialog(
-          context: context,
-          builder: (context) => Popup.confirmRemoveLekket(context, () async {
-            await lekketActionBloc.removeItem(widget.itemLekketId!);
-            bloc.loadItem(widget.itemId, widget.isAdmin);
+            context: context,
+            builder: (context) => Popup.confirmRemoveLekket(context, () async {
+                  await lekketActionBloc.removeItem(widget.itemLekketId!);
+                  bloc.loadItem(widget.itemId, widget.isAdmin);
 
-            // doing some actions after removing from lekket
-            afterLekketAction();
-          }));
+                  // doing some actions after removing from lekket
+                  afterLekketAction();
+                }));
       },
     );
   }
@@ -531,15 +622,15 @@ class _ItemDescription extends State<ItemDescription> {
         showDialog(
             context: context,
             builder: (context) => Popup.confirmAddWishList(context, () async {
-              // remove to favorite
-              print("Adding to wushkusg");
-              await itemWishListActionBloc.addWishLish(widget.itemId);
-              print("load item ?");
-              bloc.loadItem(widget.itemId, widget.isAdmin);
+                  // remove to favorite
+                  print("Adding to wushkusg");
+                  await itemWishListActionBloc.addWishLish(widget.itemId);
+                  print("load item ?");
+                  bloc.loadItem(widget.itemId, widget.isAdmin);
 
-              // doing some actions after adding to favorite
-              afterWishListAction();
-            }));
+                  // doing some actions after adding to favorite
+                  afterWishListAction();
+                }));
       },
     );
   }
@@ -554,16 +645,16 @@ class _ItemDescription extends State<ItemDescription> {
       ),
       callback: () {
         showDialog(
-          context: context,
-          builder: (context) =>
-            Popup.confirmRemoveWishList(context, () async {
-              // remove from favorite
-              await itemWishListActionBloc.removeWishLish(widget.itemId);
-              bloc.loadItem(widget.itemId, widget.isAdmin);
+            context: context,
+            builder: (context) =>
+                Popup.confirmRemoveWishList(context, () async {
+                  // remove from favorite
+                  await itemWishListActionBloc.removeWishLish(widget.itemId);
+                  bloc.loadItem(widget.itemId, widget.isAdmin);
 
-              // doing some actions after removing from favorite
-              afterWishListAction();
-            }));
+                  // doing some actions after removing from favorite
+                  afterWishListAction();
+                }));
       },
     );
   }

@@ -16,7 +16,8 @@ void main() async {
   ///
   /// Initialize firebase
   ///
-  await Firebase.initializeApp();//options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase
+      .initializeApp(); //options: DefaultFirebaseOptions.currentPlatform);
 
   ///
   /// init data from local
@@ -35,7 +36,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     /**
      * RESTRICT TO PORTRAIT
      */
@@ -46,12 +46,11 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Wanémarket',
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ThemeData().colorScheme.copyWith(
-          primary: yellowStrong,
-          secondary: yellowStrong
-        ),
+        colorScheme: ThemeData()
+            .colorScheme
+            .copyWith(primary: yellowStrong, secondary: yellowStrong),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'Apollo',
       ),
@@ -70,7 +69,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -78,44 +76,40 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     /**
      * first page is LoginPage
      */
     return appRedirection();
-
   }
 
   appRedirection() {
-    return StreamBuilder<bool?> (
-      stream: authBloc.authStream,
-      builder: (context, snapshot) {
+    return StreamBuilder<bool?>(
+        stream: authBloc.authStream,
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            ///
+            /// check if token auth is valid
+            ///
+            authBloc.init();
 
-        if(snapshot.data == null) {
-          ///
-          /// check if token auth is valid
-          ///
-          authBloc.init();
-
-          print("------------ LOADING ------------");
-          return Material(
-            child: Container(
-              child: Center(child: LoadingIcon(),),
-            )
-          );
-        }
-        else  {
-          if(snapshot.data! == false){
-            print("------------ AUTH PAGE ------------");
-            return ScaffoldVisitorCustom();
+            print("------------ LOADING ------------");
+            return Material(
+                child: Container(
+              child: Center(
+                child: LoadingIcon(),
+              ),
+            ));
+          } else {
+            if (snapshot.data! == false) {
+              print("------------ AUTH PAGE ------------");
+              return ScaffoldVisitorCustom();
+            } else {
+              print("------------ WELCOM PAGE ------------");
+              return applicationState.cguValidated
+                  ? ScaffoldConnectedCustom()
+                  : SignupWelcom();
+            }
           }
-          else {
-            print("------------ WELCOM PAGE ------------");
-            return applicationState.cguValidated ? ScaffoldConnectedCustom() : SignupWelcom();
-          }
-        }
-      }
-    );
+        });
   }
-
 }

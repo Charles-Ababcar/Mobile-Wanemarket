@@ -12,25 +12,23 @@ import 'package:mobile_frontend/common/material/dropdown.dart';
 import 'package:mobile_frontend/common/material/info-container.dart';
 import 'package:mobile_frontend/common/material/loading_icon.dart';
 
-
 // wane-material
 import 'package:mobile_frontend/common/material/textfield.dart';
 import 'package:mobile_frontend/common/material/main-button.dart';
 import 'package:mobile_frontend/common/pages/information/welcoming.dart';
 import 'package:mobile_frontend/constraints.dart';
 
-// compoenents 
+// compoenents
 import 'package:mobile_frontend/common/customed-widgets/custom-scrollable.dart';
 
 import 'edit_profile.dart';
 
 class SignupWidget extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _SignupWidget();  
+  State<StatefulWidget> createState() => _SignupWidget();
 }
 
 class _SignupWidget extends State<SignupWidget> {
-
   /**
    * 
    */
@@ -65,124 +63,105 @@ class _SignupWidget extends State<SignupWidget> {
     super.initState();
     citiesBloc.loadCities();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    
-
-   Size size = MediaQuery.of(context).size;
-   return Material(
-    child: Container(
-
+    Size size = MediaQuery.of(context).size;
+    return Material(
+        child: Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-
         children: <Widget>[
-
           /**
            * container input
            */
           Container(
-            padding: EdgeInsets.only(top: 50),
-            height: size.height * 1,
-            width: size.width * 0.9,
+              padding: EdgeInsets.only(top: 50),
+              height: size.height * 1,
+              width: size.width * 0.9,
 
-            /**
+              /**
              * column including inputs
              */
-            child: CustomScrollable (
-              child: Form (
-                key: _formKey,
-
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center, //Center Column contents horizontally,
-                  children: <Widget>[
-
-                    /**
+              child: CustomScrollable(
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment
+                              .center, //Center Column contents horizontally,
+                          children: <Widget>[
+                            /**
                      * showing form request error
                      */
-                    errorMessageStream(),
+                            errorMessageStream(),
 
-                    /** 
+                            /** 
                      * TextField phone
                      */
-                    phoneFormField(),
+                            phoneFormField(),
 
+                            SizedBox(height: sizedBoxHeight),
 
-                    SizedBox(height: sizedBoxHeight), 
-
-                    /** 
+                            /** 
                      * TextField firstname
                      */
-                    firstNameFormField(),
-                    
+                            firstNameFormField(),
 
-                    SizedBox(height: sizedBoxHeight), 
+                            SizedBox(height: sizedBoxHeight),
 
-                    /** 
+                            /** 
                      * TextField name
                      */
-                    lastNameFormField(),
+                            lastNameFormField(),
 
-                    SizedBox(height: sizedBoxHeight),
+                            SizedBox(height: sizedBoxHeight),
 
-                    /** 
+                            /** 
                      * Adresse name
                      */
-                    addressFormField(),
+                            // addressFormField(),
 
-                    SizedBox(height: sizedBoxHeight),
+                            SizedBox(height: sizedBoxHeight),
 
-
-                    /** 
+                            /** 
                      * TextField city
                      */
-                    cityFormField(),
+                            cityFormField(),
 
-                    SizedBox(height: sizedBoxHeight),
-                    Divider(color: yellowStrong),
-                    SizedBox(height: sizedBoxHeight), 
+                            SizedBox(height: sizedBoxHeight),
+                            Divider(color: yellowStrong),
+                            SizedBox(height: sizedBoxHeight),
 
-                    /** 
+                            /** 
                      * TextField password
                      */
-                    passwordFormField(),
+                            passwordFormField(),
 
-                    SizedBox(height: sizedBoxHeight), 
+                            SizedBox(height: sizedBoxHeight),
 
-                    /** 
+                            /** 
                      * TextField repeat
                      */
-                    repeatPasswordFormField(),
+                            repeatPasswordFormField(),
 
-                    SizedBox(height: sizedBoxHeight), 
+                            SizedBox(height: sizedBoxHeight),
 
-                    /**
+                            /**
                      * connection button
                      */
-                    sendingButton(),
+                            sendingButton(),
 
-                    SizedBox(height: sizedBoxHeight), 
+                            SizedBox(height: sizedBoxHeight),
 
-                    /**
+                            /**
                      * if is created
                      */
-                    isCreatedStream(),
-
-                  ]
-                )
-
-              ) 
-            )
-          )
-              
+                            isCreatedStream(),
+                          ]))))
         ],
-
       ),
-
-    ) 
-   );
+    ));
   }
 
   ////////////////////////////////
@@ -197,21 +176,17 @@ class _SignupWidget extends State<SignupWidget> {
       textFieldHintText: "N°téléphone",
       customedIcon: Icon(Icons.phone, size: 20),
       maxLength: 15,
-      
       onValidate: (Object? value) {
-        if(value.toString().isEmpty) {
+        if (value.toString().isEmpty) {
           return "Le N° de téléphone est requis";
         }
         return "";
       },
-
       onSave: (Object? value) {
         userToAdd.phone = value.toString();
       },
-      
     );
   }
-
 
   ///
   /// Phone form field
@@ -221,18 +196,15 @@ class _SignupWidget extends State<SignupWidget> {
       textFieldHintText: "Prénom",
       customedIcon: Icon(Icons.person, size: 20),
       maxLength: 50,
-      
       onValidate: (Object? value) {
-        if(value.toString().isEmpty) {
+        if (value.toString().isEmpty) {
           return "Le prénom est requis";
         }
         return "";
       },
-
       onSave: (Object? value) {
         userToAdd.firstName = value.toString();
       },
-      
     );
   }
 
@@ -240,78 +212,67 @@ class _SignupWidget extends State<SignupWidget> {
   /// Phone form field
   ///
   Widget lastNameFormField() {
-    return  TextFieldContainer(
-      textFieldHintText: "Nom",
-      customedIcon: Icon(Icons.person, size: 20),
-      maxLength: 50,
-      
-      onValidate: (Object? value) {
-        if(value.toString().isEmpty) {
-          return "Le champs nom est requis";
-        }
-        return "";
-      },
-
-      onSave: (Object? value) {
-        userToAdd.lastName = value.toString();
-      }
-    );
+    return TextFieldContainer(
+        textFieldHintText: "Nom",
+        customedIcon: Icon(Icons.person, size: 20),
+        maxLength: 50,
+        onValidate: (Object? value) {
+          if (value.toString().isEmpty) {
+            return "Le champs nom est requis";
+          }
+          return "";
+        },
+        onSave: (Object? value) {
+          userToAdd.lastName = value.toString();
+        });
   }
 
   ///
   /// Phone form field
   ///
-  Widget addressFormField() {
-    return  TextFieldContainer(
-      textFieldHintText: "Adresse",
-      customedIcon: Icon(Icons.add_location_rounded, size: 20),
-      maxLength: 100,
-      
-      onValidate: (Object? value) {
-        print("taille '$value'");
-        if(value.toString().isEmpty) {
-          return "Le champs adresse est requis";
-        }
-        return "";
-      },
+  // Widget addressFormField() {
+  //   return  TextFieldContainer(
+  //     textFieldHintText: "Adresse",
+  //     customedIcon: Icon(Icons.add_location_rounded, size: 20),
+  //     maxLength: 100,
 
-      onSave: (Object? value) {
-        userToAdd.address = value.toString();
-      }
-    );
-  }
+  //     onValidate: (Object? value) {
+  //       print("taille '$value'");
+  //       if(value.toString().isEmpty) {
+  //         return "Le champs adresse est requis";
+  //       }
+  //       return "";
+  //     },
 
+  //     onSave: (Object? value) {
+  //       userToAdd.address = value.toString();
+  //     }
+  //   );
+  // }
 
   ///
   /// Phone form field
   ///
   Widget cityFormField() {
+    return StreamBuilder<List<City>?>(
+        stream: citiesBloc.stream,
+        initialData: null,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData || snapshot.data == null) {
+            return LoadingIcon();
+          } else {
+            List<City>? cities = snapshot.data;
+            userCity = cities![0].id;
 
-    return StreamBuilder<List<City>?> (
-      stream: citiesBloc.stream,
-      initialData: null,
-      builder: (context, snapshot) {
-
-        if(!snapshot.hasData || snapshot.data == null) {
-          return LoadingIcon();
-        } else {
-
-          List<City>? cities = snapshot.data;
-          userCity = cities![0].id;
-
-          return Row(
-            children: [
+            return Row(children: [
               Dropdown(
                 pickedValue: userCity.toString(),
-
                 whenOnChange: (String newValue) {
                   setState(() {
-
                     userCity = int.parse(newValue);
                   });
-                  print ("city change: ${userCity}");
+                  print("city change: ${userCity}");
                 },
-
                 items: cities.map<DropdownMenuItem<String>>((City city) {
                   return DropdownMenuItem<String>(
                     value: city.id.toString(),
@@ -319,10 +280,9 @@ class _SignupWidget extends State<SignupWidget> {
                   );
                 }).toList(),
               ),
-          ]);
-        }
-      }
-    );
+            ]);
+          }
+        });
   }
 
   ///
@@ -334,21 +294,17 @@ class _SignupWidget extends State<SignupWidget> {
       isPassword: true,
       customedIcon: Icon(Icons.lock, size: 20),
       maxLength: 50,
-      
       onValidate: (Object? value) {
-        if(value.toString().isEmpty) {
+        if (value.toString().isEmpty) {
           return "Le mot de passe est requis";
         }
         return "";
       },
-
       onSave: (Object? value) {
         userToAdd.password = value.toString();
       },
-      
     );
   }
-
 
   ///
   /// Phone form field
@@ -359,21 +315,17 @@ class _SignupWidget extends State<SignupWidget> {
       isPassword: true,
       customedIcon: Icon(Icons.lock, size: 20),
       maxLength: 50,
-      
       onValidate: (Object? value) {
-        if(value.toString().isEmpty) {
+        if (value.toString().isEmpty) {
           return "Veuillez répéter le mot de passe";
         }
         return "";
       },
-
       onSave: (Object? value) {
         userToAdd.repeatPassword = value.toString();
       },
-                            
     );
   }
-
 
   ///
   /// Sending button
@@ -382,9 +334,7 @@ class _SignupWidget extends State<SignupWidget> {
     return MainButton(
       buttonText: "Enregistrer",
       onPressed: () async {
-
         print("cityId: ${userCity}");
-
 
         if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
@@ -398,95 +348,87 @@ class _SignupWidget extends State<SignupWidget> {
           /**
            * avoid poping is sign didnt work
            */
-          if(isSigned) {
-
-            if(applicationState.cguValidated) {
+          if (isSigned) {
+            if (applicationState.cguValidated) {
               await authBloc.authenticate(userToAdd.phone, userToAdd.password);
             } else {
-              Navigator.push(context, new MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return SignupWelcom(callback: () {
-                      authBloc.authenticate(userToAdd.phone, userToAdd.password);
-                      Navigator.of(context).pop();
-                    },);
-                  }
-              ));
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (BuildContext context) {
+                return SignupWelcom(
+                  callback: () {
+                    authBloc.authenticate(userToAdd.phone, userToAdd.password);
+                    Navigator.of(context).pop();
+                  },
+                );
+              }));
             }
             //Navigator.pop(context);
           }
-          
         }
-      },  
-    );    
+      },
+    );
   }
-
 
   ////////////////////////////////
   ///   ERROR MESSAGE STREAM   ///
   ////////////////////////////////
 
-
   ///
   /// error message stream
   ///
   StreamBuilder<String?> errorMessageStream() {
-    return StreamBuilder<String?> (
-      stream: signupBloc.reqErrStream,
-      initialData: null,
-      builder: (context, snapshot) {
-
-        // si rien, affiche rien 
-        if(snapshot.data == null) {
+    return StreamBuilder<String?>(
+        stream: signupBloc.reqErrStream,
+        initialData: null,
+        builder: (context, snapshot) {
+          // si rien, affiche rien
+          if (snapshot.data == null) {
             return Container();
-        } else if(snapshot.hasData) {
-          return Column (
-            children: [
-              /**
+          } else if (snapshot.hasData) {
+            return Column(
+              children: [
+                /**
                * request errorù
                */
-              SizedBox(height: sizedBoxHeight),
-
-              InfoContainer(
-                icon: Icon(Icons.warning_amber_rounded, size: 40, color: Colors.red),
-                contentColor: lightRed,
-                borderColor: lightRed,
-                height: 100,
-                text: Text(snapshot.data.toString().toLowerCase(), style: TextStyle()),
-              ),
-
-              SizedBox(height: sizedBoxHeight),
-            ],
-          );
-        } else {
-          return Container();
-        }
-      }
-    );
+                SizedBox(height: sizedBoxHeight),
+                InfoContainer(
+                  icon: Icon(Icons.warning_amber_rounded,
+                      size: 40, color: Colors.red),
+                  contentColor: lightRed,
+                  borderColor: lightRed,
+                  height: 100,
+                  text: Text(snapshot.data.toString().toLowerCase(),
+                      style: TextStyle()),
+                ),
+                SizedBox(height: sizedBoxHeight),
+              ],
+            );
+          } else {
+            return Container();
+          }
+        });
   }
 
   ///
   /// is created message stream
   ///
   StreamBuilder<bool> isCreatedStream() {
-    return StreamBuilder<bool> (
-      stream: signupBloc.isCreatedStream,
-      initialData: false,
-      builder: (context, snapshot) {
-
-        // si rien, affiche rien 
-        if(snapshot.data == null) {
+    return StreamBuilder<bool>(
+        stream: signupBloc.isCreatedStream,
+        initialData: false,
+        builder: (context, snapshot) {
+          // si rien, affiche rien
+          if (snapshot.data == null) {
             return Container();
-        } else if(snapshot.hasData) {
-            if(snapshot.data == true) {
+          } else if (snapshot.hasData) {
+            if (snapshot.data == true) {
               return LoadingIcon();
             } else {
               return new Container();
             }
-        } else {
-          return new Container();
-        }
-      }
-    );  
+          } else {
+            return new Container();
+          }
+        });
   }
-
 }
